@@ -31,21 +31,46 @@ exports.create = function (req, res) {
  * Show the current Article
  */
 exports.read = function (req, res) {
-
+  res.json(req.article);
 };
 
 /**
  * Update a Article
  */
 exports.update = function (req, res) {
+  var article = req.article;
 
+  article.title = req.body.title;
+  article.body = req.body.body;
+  article.published = req.body.published;
+  article.publishDate = req.body.publishDate;
+
+  article.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(article);
+    }
+  });
 };
 
 /**
  * Delete an Article
  */
 exports.delete = function (req, res) {
+  var article = req.article;
 
+  article.remove(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(article);
+    }
+  });
 };
 
 /**
