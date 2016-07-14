@@ -11,6 +11,26 @@
     var vm = this;
     $scope.authentication = Authentication;
 
+    // Configure tinymce options
+    $scope.tinymceOptions = {
+      selector: 'textarea',
+      inline: false,
+      skin: 'lightgray',
+      theme: 'modern',
+      plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'save table contextmenu directionality emoticons template paste textcolor'
+      ],
+      menubar: 'edit insert view format tools',
+      toolbar: ['undo redo cut copy paste | link image | print preview fullscreen',
+        'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | formatselect fontselect fontsizeselect '
+      ],
+      file_browser_callback: function(field_name, url, type, win) {
+        // Configure the file browser callback
+      }
+    };
+
     // Create new Article
     $scope.create = function(isValid) {
       $scope.error = null;

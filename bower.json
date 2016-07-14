@@ -26,5 +26,8 @@
     "jquery": {
       "main": []
     }
+  },
+  "devDependencies": {
+    "angular-ui-tinymce": "^0.0.16"
   }
 }
