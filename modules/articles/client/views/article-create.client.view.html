@@ -17,6 +17,17 @@
           <textarea ui-tinymce="tinymceOptions" name="content" ng-model="content" id="content" class="form-control" cols="30" rows="12" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
+          <input type="checkbox" name="published" ng-model="published" id="published" text="Published?">
+          <label for="published">Published?</label>
+        </div>
+        <div class="form-group">
+          <label for="publishDate">Publish Date</label>
+          <input id="publshDate" type="text" class="form-control" uib-datepicker-popup ng-model="publishDate" is-open="popupDatePicker.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </div>
+        <div class="form-group">
           <input type="submit" class="btn btn-default">
         </div>
         <div ng-show="error" class="text-danger">
