@@ -123,6 +123,92 @@ describe('Article CRUD tests', function() {
       });
   });
 
+  it('should not be able to save an article if no titile is provided', function(done) {
+    article.title = '';
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function(signInErr, signInRes) {
+        if (signInErr) {
+          return done(signInErr);
+        }
+
+        agent.post('/api/articles')
+          .send(article)
+          .expect(400)
+          .end(function(articleSaveErr, articleSaveRes) {
+            if (articleSaveErr) {
+              return done(articleSaveErr);
+            }
+
+            articleSaveRes.body.message.should.match('Title is required');
+
+            done();
+          });
+      });
+  });
+
+  it('should not be able to save an article if published is not set', function(done) {
+    var articleObj = {
+      title: 'Article Title',
+      body: 'Article Body',
+      publishDate: new Date()
+    };
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function(signInErr, signInRes) {
+        if (signInErr) {
+          return done(signInErr);
+        }
+
+        agent.post('/api/articles')
+          .send(articleObj)
+          .expect(400)
+          .end(function(articleSaveErr, articleSaveRes) {
+            if (articleSaveErr) {
+              return done(articleSaveErr);
+            }
+
+            articleSaveRes.body.message.should.match('Published is required');
+
+            done();
+          });
+      });
+  });
+
+  it('should not be able to save an article if publish date is not provided', function(done) {
+    var articleObj = {
+      title: 'Article Title',
+      body: 'Article Body',
+      published: true
+    };
+
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function(signInErr, signInRes) {
+        if (signInErr) {
+          return done(signInErr);
+        }
+
+        agent.post('/api/articles')
+          .send(articleObj)
+          .expect(400)
+          .end(function(articleSaveErr, articleSaveRes) {
+            if (articleSaveErr) {
+              return done(articleSaveErr);
+            }
+
+            articleSaveRes.body.message.should.match('Publish date is required');
+
+            done();
+          });
+      });
+  });
+
   it('shoule be able to get a list of articles if not logged in', function(done) {
     var articleObj = new Article(article);
 
@@ -142,6 +228,146 @@ describe('Article CRUD tests', function() {
 
           articlesGetRes.body.should.be.instanceof(Array).and.have.lengthOf(1);
           (articles[0].title).should.match('Article Title');
+
+          done();
+        });
+    });
+  });
+
+  it('should be able to get a single article if not logged in', function(done) {
+    var articleObj = new Article(article);
+
+    articleObj.save(function(err) {
+      if (err) {
+        return done(err);
+      }
+
+      agent.get('/api/articles/' + articleObj._id)
+        .expect(200)
+        .end(function(articleGetErr, articleGetRes) {
+          if (articleGetErr) {
+            return done(articleGetErr);
+          }
+
+          articleGetRes.body.should.be.instanceof(Object).and.have.property('title', article.title);
+          (articleGetRes.body._id).should.equal(articleObj._id.toString());
+
+          done();
+        });
+    });
+  });
+
+  it('should return proper error for single article with an invalid Id, if not signed in', function (done) {
+    // test is not a valid mongoose Id
+    request(app).get('/api/articles/test')
+      .expect(400)
+      .end(function (req, res) {
+        // Set assertion
+        res.body.should.be.instanceof(Object).and.have.property('message', 'Article is invalid');
+
+        // Call the assertion callback
+        done();
+      });
+  });
+
+  it('should return proper error for single article which doesnt exist, if not signed in', function (done) {
+    // This is a valid mongoose Id but a non-existent article
+    request(app).get('/api/articles/559e9cd815f80b4c256a8f41')
+      .expect(404)
+      .end(function (req, res) {
+        // Set assertion
+        res.body.should.be.instanceof(Object).and.have.property('message', 'No article with that identifier has been found');
+
+        // Call the assertion callback
+        done();
+      });
+  });
+
+  it('should be able to update an article if logged in', function(done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function(signInErr, signInRes) {
+        if (signInErr) {
+          return done(signInErr);
+        }
+
+        agent.post('/api/articles')
+          .send(article)
+          .expect(200)
+          .end(function(articleSaveErr, articleSaveRes) {
+            if (articleSaveErr) {
+              return done(articleSaveErr);
+            }
+
+            article.title = 'Updated Article Title';
+            agent.put('/api/articles/' + articleSaveRes.body._id)
+              .send(article)
+              .expect(200)
+              .end(function(articleUpdateErr, articleUpdateRes) {
+                if (articleUpdateErr) {
+                  return done(articleUpdateErr);
+                }
+
+                (articleUpdateRes.body._id).should.equal(articleSaveRes.body._id);
+                (articleUpdateRes.body.title).should.match('Updated Article Title');
+
+                done();
+              });
+          });
+      });
+  });
+
+  it('should be able to delete an article if logged in', function(done) {
+    agent.post('/api/auth/signin')
+      .send(credentials)
+      .expect(200)
+      .end(function(signInErr, signInRes) {
+        if (signInErr) {
+          return done(signInErr);
+        }
+
+        agent.post('/api/articles')
+          .send(article)
+          .expect(200)
+          .end(function(articleSaveErr, articleSaveRes) {
+            if (articleSaveErr) {
+              return done(articleSaveErr);
+            }
+
+            agent.delete('/api/articles/' + articleSaveRes.body._id)
+              .send(article)
+              .expect(200)
+              .end(function(articleDeleteErr, articleDeleteRes) {
+                if (articleDeleteErr) {
+                  return done(articleDeleteErr);
+                }
+
+                (articleDeleteRes.body._id).should.equal(articleSaveRes.body._id);
+
+                done();
+              });
+          });
+      });
+  });
+
+  it('shoule not be able to delete an article is not logged in', function(done) {
+    var articleObj = new Article(article);
+
+    articleObj.save(function(err) {
+      if (err) {
+        return done(err);
+      }
+
+      agent.delete('/api/articles/' + articleObj._id)
+        .send(article)
+        .expect(403)
+        .end(function(articleDeleteErr, articleDeleteRes) {
+          if (articleDeleteErr) {
+            return done(articleDeleteErr);
+          }
+
+          (articleDeleteRes.body.message).should.match('User is not authorized');
 
           done();
         });

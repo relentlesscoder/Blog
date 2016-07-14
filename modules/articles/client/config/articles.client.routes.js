@@ -19,13 +19,13 @@
       .state('articles.list', {
         url: '',
         templateUrl: 'modules/articles/client/views/article-list.client.view.html',
-        controller: 'ArticleController',
+        controller: 'ArticlesController',
         controllerAs: 'vm'
       })
       .state('articles.create', {
         url: '/create',
         templateUrl: 'modules/articles/client/views/article-create.client.view.html',
-        controller: 'ArticleController',
+        controller: 'ArticlesController',
         controllerAs: 'vm',
         data: {
           roles: ['user', 'admin']
