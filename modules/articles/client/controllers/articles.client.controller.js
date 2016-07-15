@@ -136,6 +136,44 @@
       $scope.article = Articles.get({
         articleId: $stateParams.articleId
       });
+      $scope.article.$promise.then(function(result) {
+        $scope.publishDate = Date.parse(result.publishDate);
+      });
+    };
+
+    $scope.update = function(isValid) {
+      $scope.error = null;
+      $scope.updated = false;
+
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'articleForm');
+
+        return false;
+      }
+
+      var article = $scope.article;
+      article.publishDate = $scope.publishDate;
+      article.$update(function() {
+        $scope.updated = true;
+      }, function(errResponse) {
+        $scope.error = errResponse.data.message;
+      });
+    };
+
+    $scope.remove = function(article) {
+      if (article) {
+        article.$remove();
+
+        for (var i in $scope.articles) {
+          if ($scope.articles[i] === article) {
+            $scope.articles.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.article.$remove(function () {
+          $location.path('articles');
+        });
+      }
     };
   }
 }());

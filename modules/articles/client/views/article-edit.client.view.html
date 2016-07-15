@@ -1,23 +1,26 @@
-<section ng-controller="ArticlesController" class="container">
+<section ng-controller="ArticlesController" ng-init="findOne()" class="container">
   <div class="page-header">
-    <h1>New Article</h1>
+    <h1>Edit Article</h1>
   </div>
   <div class="col-md-12">
-    <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>
+    <div ng-show="updated" class="alert alert-success">
+      Article updated successfully!    
+    </div>
+    <form name="articleForm" class="form-horizontal" ng-submit="update(articleForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label for="title">Title</label>
-          <input type="text" name="title" ng-model="title" id="title" class="form-control" placeholder="Title" required>
+          <input type="text" name="title" ng-model="article.title" id="title" class="form-control" placeholder="Title" required>
           <div ng-messages="articleForm.title.$error" role="alert">
             <p class="help-block error-text" mg-message="required">Article title is required.</p>
           </div>
         </div>
         <div class="form-group">
           <label for="content">Content</label>
-          <textarea ui-tinymce="tinymceOptions" name="content" ng-model="content" id="content" class="form-control" cols="30" rows="12" placeholder="Content"></textarea>
+          <textarea ui-tinymce="tinymceOptions" name="content" ng-model="article.body" id="content" class="form-control" cols="30" rows="12" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
-          <input type="checkbox" name="published" ng-model="published" id="published" text="Published?">
+          <input type="checkbox" name="published" ng-model="article.published" id="published" text="Published?">
           <label for="published">Published?</label>
         </div>
         <div class="input-group">
@@ -28,7 +31,7 @@
           </span>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-default">
+          <input type="submit" class="btn btn-default" value="Update">
         </div>
         <div ng-show="error" class="alert alert-danger">
           <strong ng-bind="error"></strong>

@@ -1,17 +1,20 @@
-<section ng-controller="ArticlesController" ng-init="find()">
+<section ng-controller="ArticlesController" ng-init="find()" class="container">
   <div class="page-header">
     <h1>Articles</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="article in (articles | filter: {published: 'true'})" class="list-group-item">
+    <div ng-repeat="article in articles" class="list-group-item">
+      <button class="pull-right btn btn-danger" ng-click="remove(article)">X</button>
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="article.publishDate | date:'mediumDate'"></span>
         by
         <span ng-bind="article.user.displayName"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
+      <a ui-sref="articles.edit({articleId: article._id})">
+        <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
+      </a>
       <p class="list-group-item-text" ng-bind-html="article.body"></p>
-    </a>
+    </div>
   </div>
 </section>
