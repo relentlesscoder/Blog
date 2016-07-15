@@ -30,6 +30,15 @@
         data: {
           roles: ['user', 'admin']
         }
+      })
+      .state('articles.edit', {
+        url: '/:articleId/edit',
+        templateUrl: 'modules/articles/client/views/article-edit.client.view.html',
+        controller: 'ArticlesController',
+        controllerAs: 'vm',
+        data: {
+          roles: ['user', 'admin']
+        }
       });
   }
 }());
