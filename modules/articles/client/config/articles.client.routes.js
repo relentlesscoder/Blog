@@ -20,7 +20,10 @@
         url: '',
         templateUrl: 'modules/articles/client/views/article-list.client.view.html',
         controller: 'ArticlesController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Articles'
+        }
       })
       .state('articles.create', {
         url: '/create',
@@ -28,7 +31,8 @@
         controller: 'ArticlesController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'admin']
+          roles: ['user', 'admin'],
+          pageTitle: 'Create Article'
         }
       })
       .state('articles.edit', {
@@ -37,7 +41,8 @@
         controller: 'ArticlesController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'admin']
+          roles: ['user', 'admin'],
+          pageTitle: 'Edit Article'
         }
       });
   }

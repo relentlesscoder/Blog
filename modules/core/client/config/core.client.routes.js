@@ -31,7 +31,10 @@
         url: '/',
         templateUrl: 'modules/core/client/views/home.client.view.html',
         controller: 'ArticlesController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: "Home"
+        }
       })
       .state('not-found', {
         url: '/not-found',
