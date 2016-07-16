@@ -33,7 +33,7 @@
           '': {
             templateUrl: 'modules/core/client/views/home.client.view.html',
             controller: 'ArticlesController',
-            controllerAs: 'vm' 
+            controllerAs: 'vm'
           },
           'about@home': {
             templateUrl: 'modules/core/client/views/about.client.view.html'
