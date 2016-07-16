@@ -5,9 +5,9 @@
     .module('articles')
     .controller('ArticlesController', ArticlesController);
 
-  ArticlesController.$inject = ['$scope', '$stateParams', '$location', 'Authentication', 'Articles'];
+  ArticlesController.$inject = ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Articles'];
 
-  function ArticlesController($scope, $stateParams, $location, Authentication, Articles) {
+  function ArticlesController($scope, $stateParams, $location, $http, Authentication, Articles) {
     var vm = this;
     $scope.authentication = Authentication;
 
@@ -109,6 +109,7 @@
       // Create new Article object
       var article = new Articles({
         title: this.title,
+        abstract: this.abstract,
         body: this.content,
         published: this.published ? this.published : false,
         publishDate: this.publishDate
@@ -118,6 +119,7 @@
         $location.path('articles/');
 
         $scope.title = '';
+        $scope.abstract = '';
         $scope.body = '';
         $scope.published = false;
         $scope.publishDate = null;
@@ -174,6 +176,28 @@
           $location.path('articles');
         });
       }
+    };
+
+    $scope.loadArchives = function() {
+      $scope.archives = null;
+      $http.get('api/archives')
+        .then(function(response) {
+          $scope.archives = response.data;
+        }, function(errResponse) {
+          // Error handling
+        });
+    };
+
+    $scope.loadArchiveArticles = function() {
+      var year = $stateParams.year;
+      var month = $stateParams.month;
+      $scope.archiveArticles = null;
+      $http.get('api/archives/' + year + '/' + month)
+        .then(function(response) {
+          $scope.archiveArticles = response.data;
+        }, function(errResponse) {
+          // Error handling
+        });
     };
   }
 }());

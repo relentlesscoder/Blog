@@ -1,4 +1,12 @@
-<section class="sidebar-module">
-  <h4>Archives</h4>
-  <p>More to come ...</p>
+<section class="sidebar-module" ng-controller="ArticlesController" ng-init="loadArchives()">
+  <div class="archive">
+    <h4>Archives</h4>
+    <p>
+      <ul class="list-unstyled">
+        <li ng-repeat="archive in archives">
+          <a ui-sref="archives({year:archive._id.year, month:archive._id.month})">{{archive._id.year}}/{{archive._id.month}} ({{archive.count}})</a>
+        </li>
+      </ul>
+    </p>
+  </div>
 </section>

@@ -18,6 +18,12 @@ module.exports = function(app) {
     .put(articles.update)
     .delete(articles.delete);
 
+  app.route('/api/archives').all(articlesPolicy.isAllowed)
+    .get(articles.listArchives);
+
+  app.route('/api/archives/:year/:month').all(articlesPolicy.isAllowed)
+    .get(articles.readArchive);
+
   // Finish by binding the article middleware
   app.param('articleId', articles.articleByID);
 };

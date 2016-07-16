@@ -12,8 +12,9 @@
         <span ng-bind="article.user.displayName"></span>
       </small>
       <a ui-sref="articles.edit({articleId: article._id})">
-        <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
+        <h2 class="list-group-item-heading" ng-bind="article.title"></h2>
       </a>
+      <strong ng-bind="article.abstract"></strong>
       <p class="list-group-item-text" ng-bind-html="article.body"></p>
     </div>
   </div>

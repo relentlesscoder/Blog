@@ -1,19 +1,14 @@
-<section ng-controller="ArticlesController" ng-init="find()">
+<section ng-controller="ArticlesController" ng-init="loadArchiveArticles()">
   <div class="container">
     <div class="row">
       <div class="col-sm-8 blog-main">
-        <div class="blog-header">
-          <h1 class="blog-title">Road to Full Stack</h1>
-          <p class="lead blog-description">Random thoughts inspired by web technologies from a developer's persperctive.</p>
-        </div>
-
-        <div ng-repeat="article in articles" class="blog-post">
+        <div ng-repeat="article in archiveArticles" class="blog-post">
           <a ui-sref="article({articleId:article._id})"><h2 class="blog-post-title" ng-bind="article.title"></h2></a>
           <p class="blog-post-meta">
             Posted at
             <span ng-bind="article.publishDate | date:'mediumDate'"></span>
           </p>
-          <p ng-bind-html="article.abstract"></p>
+          <p ng-bind="article.abstract"></p>
         </div>
       </div>
       <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
