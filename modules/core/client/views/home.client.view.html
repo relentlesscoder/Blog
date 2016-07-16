@@ -1,8 +1,8 @@
 <section ng-controller="ArticlesController" ng-init="find()">
   <div class="container">
     <div class="blog-header">
-      <h1 class="blog-title">My Web Development Blog</h1>
-      <p class="lead blog-description">Random thoughts inspired by web development technologies from a geek's persperctive.</p>
+      <h1 class="blog-title">A Web Developer's Blog</h1>
+      <p class="lead blog-description">Random thoughts inspired by web technologies from a developer's persperctive.</p>
     </div>
 
     <div class="row">
@@ -17,22 +17,11 @@
         </div>
       </div>
       <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-        <div class="sidebar-module sidebar-module-inset">
-          <h4>About</h4>
-          <p>More coming soon ...</p>
+        <div ui-view="about">
         </div>
-        <div class="sidebar-module">
-          <h4>Archives</h4>
-          <p>More coming soon ...</p>
+        <div ui-view="archives">
         </div>
       </div>
     </div>
   </div>
-
-  <footer class="blog-footer">
-    <p>&copy; 2016 Wei Shuai</p>
-    <p>
-      <a href="#">Back to top</a>
-    </p>
-  </footer>
 </section>

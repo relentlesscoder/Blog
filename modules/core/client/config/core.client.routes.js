@@ -29,11 +29,21 @@
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'modules/core/client/views/home.client.view.html',
-        controller: 'ArticlesController',
-        controllerAs: 'vm',
+        views: {
+          '': {
+            templateUrl: 'modules/core/client/views/home.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm' 
+          },
+          'about@home': {
+            templateUrl: 'modules/core/client/views/about.client.view.html'
+          },
+          'archives@home': {
+            templateUrl: 'modules/core/client/views/archives.client.view.html'
+          }
+        },
         data: {
-          pageTitle: "Home"
+          pageTitle: 'Home'
         }
       })
       .state('not-found', {
