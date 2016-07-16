@@ -1,0 +1,22 @@
+<section ng-controller="ArticlesController" ng-init="findOne()">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 blog-main">
+        <div>
+          <h2 class="blog-post-title" ng-bind="article.title"></h2>
+          <p class="blog-post-meta">
+            Posted at
+            <span ng-bind="article.publishDate | date:'mediumDate'"></span>
+          </p>
+          <p ng-bind-html="article.body"></p>
+        </div>
+      </div>
+      <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div ui-view="about">
+        </div>
+        <div ui-view="archives">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

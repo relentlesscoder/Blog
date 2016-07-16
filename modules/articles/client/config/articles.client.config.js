@@ -13,18 +13,19 @@
       title: 'Articles',
       state: 'articles',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['admin']
     });
 
     menuService.addSubMenuItem('topbar', 'articles', {
       title: 'List Articles',
-      state: 'articles.list'
+      state: 'articles.list',
+      roles: ['admin']
     });
 
     menuService.addSubMenuItem('topbar', 'articles', {
       title: 'Create Articles',
       state: 'articles.create',
-      roles: ['user']
+      roles: ['admin']
     });
   }
 }());

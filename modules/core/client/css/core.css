@@ -1,52 +1,3 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-ol, ul {
-  list-style: none;
-}
-blockquote, q {
-  quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 .content {
   margin-top: 50px;
 }
@@ -98,16 +49,91 @@ a:hover .header-profile-image {
 }
 
 /*
- * Blog name and description
- */
+  ========================================
+  Typography
+  ========================================
+*/
+body{
+  color: #888;
+  font: 300 16px/22px "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
+h1, h2, h3, h4 {
+  color: #648880;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 44px;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 44px;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  color: #a9b2b9;
+  font-size: 14px;
+}
+
+strong {
+  font-weight: 400;
+}
+cite, em {
+  font-style: italic;
+}
+
+/*
+  ========================================
+  Links
+  ========================================
+*/
+
+a:hover {
+  color: #a9b2b9;
+}
+a {
+  color: #648880;
+}
+
+/*
+  ========================================
+  Navbar
+  ========================================
+*/
+.navbar{
+  background-color: #293f50;
+}
+
+.navbar a{
+  color: #fff;
+}
+
+.navbar a:hover{
+  color: #a9b2b9;
+}
+
+/*
+  ========================================
+  Blog name and description
+  ========================================
+*/
 .blog-header {
   padding-top: 20px;
   padding-bottom: 20px;
 }
 .blog-title {
   margin-top: 30px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   font-size: 60px;
   font-weight: normal;
 }
@@ -117,9 +143,10 @@ a:hover .header-profile-image {
 }
 
 /*
- * Main column and sidebar layout
- */
-
+  ========================================
+  Main column and sidebar layout
+  ========================================
+*/
 .blog-main {
   font-size: 18px;
   line-height: 1;
@@ -141,10 +168,32 @@ a:hover .header-profile-image {
   margin-bottom: 0;
 }
 
-/*
- * Blog posts
- */
+.profile{
+  border: 1px solid #dfe2e5;
+  border-radius: 5px;
+  margin-top: 80px;
+  padding: 20px;
+  text-align: center;
+}
 
+.profile img{
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  margin: -90px 0 20px 0;
+}
+
+.archive{
+  border: 1px solid #dfe2e5;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+/*
+  ========================================
+  Blog posts
+  ========================================
+*/
 .blog-post {
   margin-bottom: 60px;
 }
@@ -158,9 +207,10 @@ a:hover .header-profile-image {
 }
 
 /*
- * Footer
- */
-
+  ========================================
+  Footer
+  ========================================
+*/
 .blog-footer {
   padding: 40px 0;
   color: #999;
@@ -172,4 +222,7 @@ a:hover .header-profile-image {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+
+
 
