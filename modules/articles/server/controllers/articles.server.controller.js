@@ -95,7 +95,7 @@ exports.list = function (req, res) {
 exports.articleByID = function (req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Article is invalid'
+      message: 'Article Id is invalid'
     });
   }
 
@@ -113,10 +113,62 @@ exports.articleByID = function (req, res, next, id) {
 };
 
 /**
+ * Load Article Detail
+ */
+exports.articleDetails = function (req, res) {
+  var now = new Date();
+  var articleId = req.params.articleId;
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    return res.status(400).send({
+      message: 'Article Id is invalid'
+    });
+  }
+
+  Article.findById(articleId).populate('author', 'displayName').exec(function (err, article) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else if (!article || !article.published || article.publishDate > now) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found'
+      });
+    } else {
+      res.json(article);
+    }
+  });
+};
+
+/**
+ * List of Articles (Published)
+ */
+exports.listArticles = function (req, res) {
+  var now = new Date();
+  Article.find({
+    published: true,
+    publishDate: { $lte: new Date(now.toISOString()) }
+  }).sort('-publishDate').populate('author', 'displayName').exec(function(err, articles) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(articles);
+    }
+  });
+};
+
+/**
  * List of Articles Archives
  */
 exports.listArchives = function (req, res) {
+  var now = new Date();
   Article.aggregate([{
+    $match: {
+      published: true,
+      publishDate: { $lte: new Date(now.toISOString()) }
+    }
+  }, {
     $group: {
       _id: {
         year: { $year: '$publishDate' },
@@ -124,6 +176,8 @@ exports.listArchives = function (req, res) {
       },
       count: { $sum: 1 }
     }
+  }, {
+    $sort: { '_id.year': -1, '_id.month': -1 }
   }], function (err, result) {
     if (err) {
       return res.status(400).send({
@@ -144,7 +198,7 @@ exports.readArchive = function (req, res) {
   var month = parseInt(req.params.month, 10) - 1;
   var firstDayOfMonth = new Date(year, month, 1);
   var firstDayOfNextMonth = new Date(year, month + 1, 1);
-  Article.find({
+  Article.find({ published: true,
     $and: [{
       publishDate: { $gte: new Date(firstDayOfMonth.toISOString()) }
     }, {
