@@ -79,8 +79,7 @@ module.exports.initMiddleware = function (app) {
     // Disable views cache
     app.set('view cache', false);
   } else if (process.env.NODE_ENV === 'production') {
-    //app.locals.cache = 'memory';
-    app.set('view cache', false);
+    app.locals.cache = 'memory';
   }
 
   // Request body parsing middleware should be above methodOverride
