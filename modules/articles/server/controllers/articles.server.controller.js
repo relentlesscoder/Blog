@@ -41,6 +41,7 @@ exports.update = function (req, res) {
   var article = req.article;
 
   article.title = req.body.title;
+  article.abstract = req.body.abstract;
   article.body = req.body.body;
   article.published = req.body.published;
   article.publishDate = req.body.publishDate;
@@ -108,5 +109,57 @@ exports.articleByID = function (req, res, next, id) {
     }
     req.article = article;
     next();
+  });
+};
+
+/**
+ * List of Articles Archives
+ */
+exports.listArchives = function (req, res) {
+  Article.aggregate([{
+    $group: {
+      _id: {
+        year: { $year: '$publishDate' },
+        month: { $month: '$publishDate' }
+      },
+      count: { $sum: 1 }
+    }
+  }], function (err, result) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(result);
+    }
+  });
+};
+
+/**
+ * List of Articles By Year and Month
+ */
+exports.readArchive = function (req, res) {
+  var year = parseInt(req.params.year, 10);
+  // JavaScript month starts with 0
+  var month = parseInt(req.params.month, 10) - 1;
+  var firstDayOfMonth = new Date(year, month, 1);
+  var firstDayOfNextMonth = new Date(year, month + 1, 1);
+  Article.find({
+    $and: [{
+      publishDate: { $gte: new Date(firstDayOfMonth.toISOString()) }
+    }, {
+      publishDate: { $lt: new Date(firstDayOfNextMonth.toISOString()) }
+    }]
+  }).sort('-publishDate').exec(function (err, articles) {
+    console.log(firstDayOfMonth);
+    console.log(firstDayOfNextMonth);
+    console.log(err);
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(articles);
+    }
   });
 };

@@ -29,11 +29,65 @@
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'modules/core/client/views/home.client.view.html',
-        controller: 'ArticlesController',
-        controllerAs: 'vm',
+        views: {
+          '': {
+            templateUrl: 'modules/core/client/views/home.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          },
+          'about@home': {
+            templateUrl: 'modules/core/client/views/about.client.view.html'
+          },
+          'archives@home': {
+            templateUrl: 'modules/core/client/views/archives.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          }
+        },
         data: {
-          pageTitle: "Home"
+          pageTitle: 'Home'
+        }
+      })
+      .state('archives', {
+        url: '/archives/:year/:month',
+        views: {
+          '': {
+            templateUrl: 'modules/articles/client/views/archives.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          },
+          'about@archives': {
+            templateUrl: 'modules/core/client/views/about.client.view.html'
+          },
+          'archives@archives': {
+            templateUrl: 'modules/core/client/views/archives.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          }
+        },
+        data: {
+          pageTitle: 'Archives'
+        }
+      })
+      .state('article', {
+        url: '/article/:articleId',
+        views: {
+          '': {
+            templateUrl: 'modules/articles/client/views/article-detail.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          },
+          'about@article': {
+            templateUrl: 'modules/core/client/views/about.client.view.html'
+          },
+          'archives@article': {
+            templateUrl: 'modules/core/client/views/archives.client.view.html',
+            controller: 'ArticlesController',
+            controllerAs: 'vm'
+          }
+        },
+        data: {
+          pageTitle: 'Article'
         }
       })
       .state('not-found', {

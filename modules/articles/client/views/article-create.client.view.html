@@ -6,22 +6,26 @@
     <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label for="title">Title</label>
+          <label for="title">Title*</label>
           <input type="text" name="title" ng-model="title" id="title" class="form-control" placeholder="Title" required>
           <div ng-messages="articleForm.title.$error" role="alert">
             <p class="help-block error-text" mg-message="required">Article title is required.</p>
           </div>
         </div>
         <div class="form-group">
+          <label for="abstract">Abstract</label>
+          <textarea name="abstract" ng-model="abstract" id="abstract" class="form-control" cols="30" rows="5" placeholder="Abstract"></textarea>
+        </div>
+        <div class="form-group">
           <label for="content">Content</label>
-          <textarea ui-tinymce="tinymceOptions" name="content" ng-model="content" id="content" class="form-control" cols="30" rows="12" placeholder="Content"></textarea>
+          <textarea ui-tinymce="tinymceOptions" name="content" ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
           <input type="checkbox" name="published" ng-model="published" id="published" text="Published?">
-          <label for="published">Published?</label>
+          <label for="published">Published?*</label>
         </div>
         <div class="input-group">
-          <label style="display:table-row;" for="publishDate">Publish Date</label>
+          <label style="display:table-row;" for="publishDate">Publish Date*</label>
           <input style="border-radius:4px;" id="publshDate" type="text" class="form-control" uib-datepicker-popup ng-model="publishDate" is-open="popupDatePicker.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>

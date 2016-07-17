@@ -22,6 +22,11 @@ var ArticleSchema = new Schema({
     trim: true,
     required: 'Title is required'
   },
+  abstract: {
+    type: String,
+    default: '',
+    trim: true
+  },
   body: {
     type: String,
     default: '',
