@@ -178,8 +178,25 @@
       }
     };
 
+    $scope.loadArticles = function() {
+      $http.get('api/loadarticles')
+        .then(function(response) {
+          $scope.articles = response.data;
+        }, function(errResponse) {
+          // Error handling
+        });
+    };
+
+    $scope.articleDetails = function() {
+      $http.get('api/loadarticles/' + $stateParams.articleId)
+        .then(function(response) {
+          $scope.article = response.data;
+        }, function(errResponse) {
+          // Error handling
+        });
+    };
+
     $scope.loadArchives = function() {
-      $scope.archives = null;
       $http.get('api/archives')
         .then(function(response) {
           $scope.archives = response.data;
@@ -191,7 +208,6 @@
     $scope.loadArchiveArticles = function() {
       var year = $stateParams.year;
       var month = $stateParams.month;
-      $scope.archiveArticles = null;
       $http.get('api/archives/' + year + '/' + month)
         .then(function(response) {
           $scope.archiveArticles = response.data;
