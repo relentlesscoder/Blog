@@ -21,6 +21,12 @@ exports.invokeRolesPolicies = function() {
       resources: '/api/articles/:articleId',
       permissions: '*'
     }, {
+      resources: '/api/loadarticles/:articleId',
+      permissions: '*'
+    }, {
+      resources: '/api/loadarticles',
+      permissions: '*'
+    }, {
       resources: '/api/archives',
       permissions: '*'
     }, {
@@ -31,9 +37,15 @@ exports.invokeRolesPolicies = function() {
     roles: ['user'],
     allows: [{
       resources: '/api/articles',
-      permissions: ['get', 'post']
+      permissions: ['get']
     }, {
       resources: '/api/articles/:articleId',
+      permissions: ['get']
+    }, {
+      resources: '/api/loadarticles/:articleId',
+      permissions: ['get']
+    }, {
+      resources: '/api/loadarticles',
       permissions: ['get']
     }, {
       resources: '/api/archives',
@@ -49,6 +61,12 @@ exports.invokeRolesPolicies = function() {
       permissions: ['get']
     }, {
       resources: '/api/articles/:articleId',
+      permissions: ['get']
+    }, {
+      resources: '/api/loadarticles/:articleId',
+      permissions: ['get']
+    }, {
+      resources: '/api/loadarticles',
       permissions: ['get']
     }, {
       resources: '/api/archives',
