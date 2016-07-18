@@ -21,7 +21,7 @@ exports.invokeRolesPolicies = function() {
       resources: '/api/articles/:articleId',
       permissions: '*'
     }, {
-      resources: '/api/articles/:articleId/display',
+      resources: '/api/loadarticles/:articleId',
       permissions: '*'
     }, {
       resources: '/api/loadarticles',
@@ -42,7 +42,7 @@ exports.invokeRolesPolicies = function() {
       resources: '/api/articles/:articleId',
       permissions: ['get']
     }, {
-      resources: '/api/articles/:articleId/display',
+      resources: '/api/loadarticles/:articleId',
       permissions: ['get']
     }, {
       resources: '/api/loadarticles',
@@ -63,7 +63,7 @@ exports.invokeRolesPolicies = function() {
       resources: '/api/articles/:articleId',
       permissions: ['get']
     }, {
-      resources: '/api/articles/:articleId/display',
+      resources: '/api/loadarticles/:articleId',
       permissions: ['get']
     }, {
       resources: '/api/loadarticles',

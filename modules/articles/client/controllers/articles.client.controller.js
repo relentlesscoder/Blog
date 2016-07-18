@@ -188,7 +188,7 @@
     };
 
     $scope.articleDetails = function() {
-      $http.get('api/articles/" + $stateParams.articleId + "/display')
+      $http.get('api/loadarticles/' + $stateParams.articleId)
         .then(function(response) {
           $scope.article = response.data;
         }, function(errResponse) {
